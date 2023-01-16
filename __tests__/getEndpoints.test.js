@@ -72,7 +72,13 @@ describe('GET Endpoints', () => {
 
         });
         
-        test(`Expect the returned JSON object to also have the property of comment_count`)
+        test(`Expect the returned JSON object to also have the property of comment_count`, () => {
+
+        });
+
+        test(`Expect the reviews to be sorted by date in descending order`, () => {
+
+        });
 
     });
 });

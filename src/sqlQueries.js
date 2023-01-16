@@ -1,8 +1,8 @@
 
-const gameCategories = `SELECT * from categories;`;
-const gameReviews = `SELECT * from reviews ORDER BY created_at DESC`;
+const gameCategories = `SELECT * FROM categories;`;
+const gameReviews = `SELECT * FROM reviews ORDER BY created_at DESC;`;
+const reviewComments = `SELECT * FROM comments`
 
 
 
-
-module.exports = {gameCategories, gameReviews};
+module.exports = {gameCategories, gameReviews, reviewComments};
