@@ -1,18 +1,14 @@
-const pool = require('../db/connection');
-const sqlQueries = require ('../src/sqlQueries');
+const { fetchCategories } = require ('./models');
 
-function getCategories(request, response) {
-    pool.query(sqlQueries.sqlCategories, (error, categoryList) => {
+//This requested alteration doesn't run.
+const getCategories = (request, response, next) => {
+   
+    fetchCategories()
+    .then((gameCategories) => {
 
-        try {
-            
-            response.status(200).json(categoryList.rows);
+         response.status(200).json(gameCategories);
 
-        } catch {
-            console.error('error:', error);
-            throw error;
-        }
-    })
+    }).catch(next);
 }
 
 module.exports = {getCategories};

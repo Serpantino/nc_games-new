@@ -15,8 +15,8 @@ app.get('/', (request, response) => {
 app.use('/api/', boardGameRoutes);
 
 
-app.listen(port, () => {
-    console.log(`Listening on ${port}`);
-})
+// app.listen(port, () => {
+//     console.log(`Listening on ${port}`);
+// })
 
 module.exports = app;
