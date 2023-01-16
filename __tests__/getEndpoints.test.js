@@ -25,12 +25,13 @@ describe('GET Endpoints', () => {
             
         });
 
-        test('Expect the returned JSON object to have both a slug & properties key', () => {
+        test('Expect the returned JSON object to have both a slug & properties key & has a length of 4', () => {
 
             return request(app).get('/api/categories')
             .expect(200)
             .then(categoryData => {
                 // console.log('categoryData:', categoryData.body);
+                expect(categoryData.body).toHaveLength(4);
                 categoryData.body.forEach((entry)=> {
                     console.log('Looking at===>', entry);
                     expect(entry).toHaveProperty('slug');
