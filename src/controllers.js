@@ -1,4 +1,4 @@
-const { fetchCategories } = require ('./models');
+const { fetchCategories, fetchReviews } = require ('./models');
 
 //This requested alteration doesn't run.
 const getCategories = (request, response, next) => {
@@ -8,7 +8,19 @@ const getCategories = (request, response, next) => {
 
          response.status(200).json(gameCategories);
 
-    }).catch(next);
+    })
+    .catch(next);
 }
 
-module.exports = {getCategories};
+
+const getReviews = (request, response, next) => {
+
+    fetchReviews()
+    .then((gameReviews)=> {
+
+        response.status(200).json(gameReviews);
+    })
+    .catch(next);
+}
+
+module.exports = {getCategories, getReviews};

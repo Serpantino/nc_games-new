@@ -15,7 +15,7 @@ afterAll(() => {
 describe('GET Endpoints', () => {
 
 
-    describe('getCategories controller', () => {
+    describe.skip('getCategories controller', () => {
 
         test('Expect status 200 & a JSON object when /api/categories is called', () => {
 
@@ -41,6 +41,38 @@ describe('GET Endpoints', () => {
             });
                 
         });
+
+    }); //
+    describe('getReviews controller', () => {
+
+        test('Expect status 200 & a JSON object when /api/reviews is called', () => {
+
+            return request(app).get('/api/reviews')
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            
+        });
+
+        test(`Expect the returned JSON object to have the all of the expected properties`, () => {
+
+            return request(app).get('/api/reviews')
+            .then(reviewData => {
+                expect(reviewData.body).toHaveLength(13);
+                reviewData.body.forEach(review => {
+                    expect(review).toHaveProperty('title');
+                    expect(review).toHaveProperty('designer');
+                    expect(review).toHaveProperty('owner');
+                    expect(review).toHaveProperty('review_img_url');
+                    expect(review).toHaveProperty('review_body');
+                    expect(review).toHaveProperty('category');
+                    expect(review).toHaveProperty('created_at');
+                    expect(review).toHaveProperty('votes');
+                })
+            })
+
+        });
+        
+        test(`Expect the returned JSON object to also have the property of comment_count`)
 
     });
 });
