@@ -15,7 +15,7 @@ afterAll(() => {
 describe('GET Endpoints', () => {
 
 
-    describe.skip('getCategories controller', () => {
+    describe('getCategories controller', () => {
 
         test('Expect status 200 & a JSON object when /api/categories is called', () => {
 
@@ -92,7 +92,7 @@ describe('GET Endpoints', () => {
 
     });
 
-    describe.only('getReviewComments', () => {
+    describe('getReviewComments', () => {
 
         test('Expect server to return a 200 status & JSON object when called with a valid parametric id', () => {
 
