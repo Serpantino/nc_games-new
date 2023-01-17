@@ -1,5 +1,5 @@
 const Router = require('express');
-const {getCategories} = require('./controllers');
+const {getCategories, getReviewComments} = require('./controllers');
 const router = new Router();
 
 router.get('/', (request, response) => {
@@ -10,5 +10,12 @@ router.get('/', (request, response) => {
 
 router.get('/categories', getCategories);
 
+
+router.get('/reviews/:review_id/comments');
+
+
+
+
+router.get('/reviews/:review_id/comments', getReviewComments);
 
 module.exports = router;

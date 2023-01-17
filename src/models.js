@@ -9,5 +9,11 @@ function fetchCategories() {
     });
 }
 
+function fetchReviewComments(id) {
+    return db.query(sqlQueries.fetchReviewComments, [id.review_id])
+    .then(reviewComments => {
+        return reviewComments.rows;
+    })
+}
 
-module.exports = {fetchCategories};
+module.exports = {fetchCategories, fetchReviewComments};
