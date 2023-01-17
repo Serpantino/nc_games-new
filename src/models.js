@@ -1,5 +1,6 @@
 const db = require('../db/connection');
 const sqlQueries = require ('../src/sqlQueries');
+const {buildNewReviewObj} = require ('../util_funcs/utilityFunctions');
 
 
 function fetchCategories() {
@@ -11,34 +12,55 @@ function fetchCategories() {
 
 function fetchReviews() {
 
+    let gameReviews;
+    let commentCount;
+
     return db.query(sqlQueries.gameReviews)
-    .then(gameReviews => {
-        //This might be backwards (comments > review)
-        db.query(sqlQueries.reviewComments)
-        .then((comments) => {   //This would be better in a util func
-            
-            for(const comment of comments.rows) {
-                let comments = 0;
-                for(const review of gameReviews.rows) {
-                    console.log('review_id',review.review_id);
-                    console.log('comment rev_id',comment.review_id);
-                    if(comment.review_id === review.review_id) {
-                        console.log('Go Fish')
-                        comments++;
-                    }
-                    // console.log('comments', comments)
-    
-                    return review.comment_count += comments;
-                };
-
-            }
-        })
-        
-        return gameReviews.rows;
+    .then(({rows}) => {
+        gameReviews = rows;
     })
+    .then(() => {
 
+     return db.query(sqlQueries.reviewCommentCount)})
 
-}
+    .then(({rows}) => {
+            commentCount = rows;
+            const fixedReviews = buildNewReviewObj(gameReviews, commentCount);
+
+            return fixedReviews;
+        })    
+}  
 
 
 module.exports = {fetchCategories, fetchReviews};
+
+
+/*Backup because HUSKY grrrrr 
+
+function fetchReviews() {
+    db.query(sqlQueries.gameReviews)
+    .then(({rows}) => {
+        let gameReviews = rows;
+        
+        db.query(sqlQueries.reviewCommentCount)
+        .then(commentCount => {
+            
+            commentCount.rows.forEach(comments => {
+                for(const review of gameReviews) 
+                {
+                    if (comments.review_id === review.review_id){
+                        
+                        review.comment_count = comments.tot;
+                    }
+                }
+            })
+            console.log('revs', gameReviews);
+            return gameReviews;
+        })  
+        
+    })
+    
+    // return console.log('revOut', gameReviews);
+ 
+}  
+*/

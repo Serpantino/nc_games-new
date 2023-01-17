@@ -17,7 +17,7 @@ const getReviews = (request, response, next) => {
 
     fetchReviews()
     .then((gameReviews)=> {
-
+        
         response.status(200).json(gameReviews);
     })
     .catch(next);

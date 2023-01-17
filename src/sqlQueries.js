@@ -2,7 +2,8 @@
 const gameCategories = `SELECT * FROM categories;`;
 const gameReviews = `SELECT * FROM reviews ORDER BY created_at DESC;`;
 const reviewComments = `SELECT * FROM comments`
+const reviewCommentCount = `
+SELECT reviews.review_id, (SELECT COUNT (review_id) FROM comments WHERE comments.review_id = reviews.review_id) AS TOT FROM reviews;`
 
 
-
-module.exports = {gameCategories, gameReviews, reviewComments};
+module.exports = {gameCategories, gameReviews, reviewComments, reviewCommentCount};

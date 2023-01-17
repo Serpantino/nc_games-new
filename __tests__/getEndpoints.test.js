@@ -30,7 +30,7 @@ describe('GET Endpoints', () => {
             return request(app).get('/api/categories')
             .expect(200)
             .then(categoryData => {
-                // console.log('categoryData:', categoryData.body);
+
                 expect(categoryData.body).toHaveLength(4);
                 categoryData.body.forEach((entry)=> {
                     console.log('Looking at===>', entry);
@@ -71,13 +71,23 @@ describe('GET Endpoints', () => {
             })
 
         });
-        
-        test(`Expect the returned JSON object to also have the property of comment_count`, () => {
+        test(`Expect the reviews to be sorted by date in descending order`, () => {
+            return request(app).get('/api/reviews')
+            .then(({body}) => {
 
+                expect(body[0].created_at).toBe('2021-01-25T11:16:54.963Z');
+                expect(body[12].created_at).toBe('1970-01-10T02:08:38.400Z');
+                
+            })
         });
 
-        test(`Expect the reviews to be sorted by date in descending order`, () => {
-
+        test(`Expect the returned JSON object to also have the property of comment_count`, () => {
+            return request(app).get('/api/reviews')
+            .then(({body}) => {
+                body.forEach(review => {
+                    expect(review).toHaveProperty('comment_count');
+                })
+            })
         });
 
     });
