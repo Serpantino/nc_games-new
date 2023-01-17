@@ -32,7 +32,17 @@ function fetchReviews() {
 }  
 
 
-module.exports = {fetchCategories, fetchReviews};
+function fetchSingleReview(id) {
+    
+    return db.query(sqlQueries.singleReview,[id.review_id])
+    .then(review => {
+        
+        return review.rows;
+    })
+}
+
+
+module.exports = {fetchCategories, fetchReviews, fetchSingleReview};
 
 
 /*Backup because HUSKY grrrrr 

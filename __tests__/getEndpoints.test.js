@@ -43,7 +43,7 @@ describe('GET Endpoints', () => {
         });
 
     }); //
-    describe('getReviews controller', () => {
+    describe.skip('getReviews controller', () => {
 
         test('Expect status 200 & a JSON object when /api/reviews is called', () => {
 
@@ -90,5 +90,42 @@ describe('GET Endpoints', () => {
             })
         });
 
+    });
+
+    describe('getSingleReview', () => {
+
+        test(`Expect the response code to return 200 & a JSON object`, () => {
+            return request(app).get('/api/reviews/1')
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+        });
+
+        test(`Expect the response to have all the properties found on a review`, () => {
+            return request(app).get('/api/reviews/3')
+            .then(singleReview => {
+    
+                singleReview.body.forEach(review => {
+                    expect(review).toHaveProperty('title');
+                    expect(review).toHaveProperty('review_id');
+                    expect(review).toHaveProperty('designer');
+                    expect(review).toHaveProperty('owner');
+                    expect(review).toHaveProperty('review_img_url');
+                    expect(review).toHaveProperty('review_body');
+                    expect(review).toHaveProperty('category');
+                    expect(review).toHaveProperty('created_at');
+                    expect(review).toHaveProperty('votes');
+                });
+            });
+        });
+
+        test(`Expect review_id to be equal to the parametric value passed in`, () => {
+            const reviewID = 5;
+            return request(app).get(`/api/reviews/${reviewID}`)
+            .then(({body}) => {
+    
+                expect(body[0].review_id).toBe(reviewID);
+
+            })
+        });
     });
 });

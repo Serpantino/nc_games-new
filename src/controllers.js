@@ -1,4 +1,4 @@
-const { fetchCategories, fetchReviews } = require ('./models');
+const { fetchCategories, fetchReviews, fetchSingleReview } = require ('./models');
 
 //This requested alteration doesn't run.
 const getCategories = (request, response, next) => {
@@ -23,4 +23,15 @@ const getReviews = (request, response, next) => {
     .catch(next);
 }
 
-module.exports = {getCategories, getReviews};
+const getSingleReview = (request, response, next) => {
+
+    fetchSingleReview(request.params)
+    .then((singleReview) => {
+
+        response.status(200)
+        .json(singleReview);
+    })
+    .catch(next);
+}
+
+module.exports = {getCategories, getReviews, getSingleReview};
