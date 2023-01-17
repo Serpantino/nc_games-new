@@ -1,4 +1,5 @@
-const { fetchCategories, fetchReviewComments } = require ('./models');
+const { fetchCategories, fetchReviewComments, fetchReviews } = require ('./models');
+
 
 //This requested alteration doesn't run.
 const getCategories = (request, response, next) => {
@@ -8,7 +9,8 @@ const getCategories = (request, response, next) => {
 
          response.status(200).json(gameCategories);
 
-    }).catch(next);
+    })
+    .catch(next);
 }
 
 const getReviewComments = (request, response, next) => {
@@ -21,3 +23,15 @@ const getReviewComments = (request, response, next) => {
 }
 
 module.exports = {getCategories, getReviewComments};
+
+const getReviews = (request, response, next) => {
+
+    fetchReviews()
+    .then((gameReviews)=> {
+        
+        response.status(200).json(gameReviews);
+    })
+    .catch(next);
+}
+
+module.exports = {getCategories, getReviews};
