@@ -22,10 +22,9 @@ const getReviewComments = (request, response, next) => {
     })
 }
 
-module.exports = {getCategories, getReviewComments};
 
 const getReviews = (request, response, next) => {
-
+    
     fetchReviews()
     .then((gameReviews)=> {
         
@@ -34,4 +33,5 @@ const getReviews = (request, response, next) => {
     .catch(next);
 }
 
-module.exports = {getCategories, getReviews};
+module.exports = {getCategories, getReviews, getReviewComments};
+
