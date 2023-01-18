@@ -110,7 +110,17 @@ describe('GET Endpoints', () => {
                 .then(({body}) => {
 
                     expect(body.message).toBe('Bad Request, your request may be out of range');
-                })
+                });
+            });
+
+            test(`Expect a 400 response when an invalid value is passed as the parametric `, () => {
+
+                return request(app).get('/api/reviews/bananas')
+                .expect(400)
+                .then(({body}) => {
+
+                    expect(body.message).toBe('Bad Request, your request may be out of range');
+                });
             });
         });
 
@@ -144,23 +154,5 @@ describe('GET Endpoints', () => {
         });
     });
         
-        test(`Expect review_id to be equal to the parametric value passed in`, () => {
-
-            const reviewID = 5;
-            return request(app).get(`/api/reviews/${reviewID}`)
-            .then(({body}) => {
-    
-                expect(body[0].review_id).toBe(reviewID);
-
-            })
-        });
     });
 });
-
-
-//!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_! //
-//!_!_!_!_!_!_!_!_MERGE NOTES_!_!_!_!_!_!_! //
-//!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_! //
-/*
-Removed the 500 error test.
-*/

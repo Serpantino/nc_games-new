@@ -1,6 +1,6 @@
 const { fetchCategories, fetchReviews, fetchSingleReview } = require ('./models');
 
-//This requested alteration doesn't run.
+
 const getCategories = (request, response, next) => {
    
     fetchCategories()
