@@ -1,6 +1,6 @@
-const { fetchCategories, fetchReviews } = require ('./models');
+const { fetchCategories, fetchReviews, fetchSingleReview } = require ('./models');
 
-//This requested alteration doesn't run.
+
 const getCategories = (request, response, next) => {
    
     fetchCategories()
@@ -12,13 +12,6 @@ const getCategories = (request, response, next) => {
     .catch(error => next(error));
 }
 
-const get500Error = (request, response, next) => {
-    nonExistentFunc().then(foobar => {
-        response.status(200).send(foobar);
-    }).catch(error => next(error));
-}
-
-
 const getReviews = (request, response, next) => {
 
     fetchReviews()
@@ -29,11 +22,25 @@ const getReviews = (request, response, next) => {
     .catch(error => next(error));
 }
 
-module.exports = {getCategories, getReviews, get500Error};
+const getSingleReview = (request, response, next) => {
+
+    fetchSingleReview(request.params)
+    .then((singleReview) => {
+        if(singleReview.length === 0) {
+            throw(error)
+        }
+
+        response.status(200).send(singleReview);
+    })
+    .catch(error => next(error));
+}
+
+module.exports = {getCategories, getReviews, getSingleReview};
+
 
 //!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_! //
 //!_!_!_!_!_!_!_!_MERGE NOTES_!_!_!_!_!_!_! //
 //!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_! //
 /*
-    Want all instances of json replaced with get.
+    Removed get500Error as it gets overridden by 400.
 */

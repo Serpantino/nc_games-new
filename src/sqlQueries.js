@@ -10,10 +10,12 @@ ORDER BY created_at DESC;`;
 const reviewCommentsSQL = `SELECT * FROM comments`
 const reviewCommentCountSQL = `
 SELECT reviews.review_id, (SELECT COUNT (review_id) FROM comments WHERE comments.review_id = reviews.review_id) AS TOT FROM reviews;`
+const singleReviewSQL = `SELECT * FROM reviews WHERE review_id = $1;`;
 
 
 module.exports = {gameCategoriesSQL,
      getAllReviewsWithCommentCountSQL, 
      reviewCommentsSQL, 
-     reviewCommentCountSQL
+     reviewCommentCountSQL,
+     singleReviewSQL
     };

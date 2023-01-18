@@ -20,5 +20,12 @@ function fetchReviews() {
 
 
 
-module.exports = {fetchCategories, fetchReviews};
+function fetchSingleReview(id) {
+    
+    return db.query(sqlQueries.singleReviewSQL,[id.review_id])
+    .then(review => review.rows);
+}
+
+
+module.exports = {fetchCategories, fetchReviews, fetchSingleReview};
 
