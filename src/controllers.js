@@ -6,7 +6,7 @@ const getCategories = (request, response, next) => {
     fetchCategories()
     .then((gameCategories) => {
 
-         response.status(200).send(gameCategories);
+         response.status(200).send({categories: gameCategories});
 
     })
     .catch(error => next(error));

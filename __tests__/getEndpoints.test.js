@@ -57,8 +57,8 @@ describe('GET Endpoints', () => {
                 .expect(200)
                 .then(categoryData => {
                     
-                    expect(categoryData.body).toHaveLength(4);
-                    categoryData.body.forEach((entry)=> {
+                    expect(categoryData.body.categories).toHaveLength(4);
+                    categoryData.body.categories.forEach((entry)=> {
                         expect(entry).toHaveProperty('slug');
                         expect(entry).toHaveProperty('description');
 
@@ -84,16 +84,17 @@ describe('GET Endpoints', () => {
                 .then(reviewData => {
                     expect(reviewData.body).toHaveLength(13);
                     reviewData.body.forEach(review => {
-                        expect(review).toHaveProperty('title');
-                        expect(review).toHaveProperty('designer');
-                        expect(review).toHaveProperty('owner');
-                        expect(review).toHaveProperty('review_img_url');
-                        expect(review).toHaveProperty('review_body');
-                        expect(review).toHaveProperty('category');
-                        expect(review).toHaveProperty('created_at');
-                        expect(review).toHaveProperty('votes');
-                    })
-                })
+                        expect(review).toHaveProperty('title', expect.any(String));
+                        expect(review).toHaveProperty('designer', expect.any(String));
+                        expect(review).toHaveProperty('owner', expect.any(String));
+                        expect(review).toHaveProperty('review_img_url', expect.any(String));
+                        expect(review).toHaveProperty('review_body', expect.any(String));
+                        expect(review).toHaveProperty('category', expect.any(String));
+                        expect(review).toHaveProperty('created_at', expect.any(String));
+                        expect(review).toHaveProperty('votes', expect.any(Number));
+                        expect(review).toHaveProperty('comment_count', expect.any(Number));
+                    });
+                });
                 
             });
             test(`Expect the reviews to be sorted by date in descending order`, () => {
@@ -101,23 +102,14 @@ describe('GET Endpoints', () => {
                 .then(({body}) => {
                     
                     expect(body).toBeSortedBy('created_at', {descending: true })
-                    // expect(body[0].created_at).toBe('2021-01-25T11:16:54.963Z');
-                    // expect(body[12].created_at).toBe('1970-01-10T02:08:38.400Z');
-                    
-                })
+                });
             });
             
-            test(`Expect the returned JSON object to also have the property of comment_count`, () => {
-                return request(app).get('/api/reviews')
-                .then(({body}) => {
-                    body.forEach(review => {
-                        expect(review).toHaveProperty('comment_count');
-                    })
-                })
+        
             });
-        });
     });
 });
+
 
 //!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_! //
 //!_!_!_!_!_!_!_!_MERGE NOTES_!_!_!_!_!_!_! //
