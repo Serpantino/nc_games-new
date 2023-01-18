@@ -14,9 +14,26 @@ app.get('/', (request, response) => {
 
 app.use('/api/', boardGameRoutes);
 
+//===========================//
+//===== Error Handlers =====//
+//===========================//
+app.use((error, request, response, next) => {
+    
+    response.status(500).send({message: 'Generic Server Error, please check your request & try again, if this persists contact us.'});
+});
 
-// app.listen(port, () => {
-//     console.log(`Listening on ${port}`);
-// })
+
+app.use((request, response, next) => {
+    
+    response.status(404).send({message: `Page not found, please check your syntax. You entered: ${request.url}`})
+});
+//---------------------------//
 
 module.exports = app;
+
+//!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_! //
+//!_!_!_!_!_!_!_!_MERGE NOTES_!_!_!_!_!_!_! //
+//!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_! //
+/*
+    Remember to keep error Handlers at the bottom. Especially 404.
+*/
