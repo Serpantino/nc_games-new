@@ -14,8 +14,6 @@ router.get('/reviews', getReviews);
 
 router.get('/reviews/:review_id', getSingleReview);
 
-router.get('/500error', get500Error);
-
 //router.route for reference
 module.exports = router;
 

@@ -22,11 +22,8 @@ function fetchReviews() {
 
 function fetchSingleReview(id) {
     
-    return db.query(sqlQueries.singleReview,[id.review_id])
-    .then(review => {
-        
-        return review.rows;
-    })
+    return db.query(sqlQueries.singleReviewSQL,[id.review_id])
+    .then(review => review.rows);
 }
 
 
