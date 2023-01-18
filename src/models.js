@@ -1,10 +1,10 @@
 const db = require('../db/connection');
 const sqlQueries = require ('../src/sqlQueries');
-const {buildNewReviewObj} = require ('../util_funcs/utilityFunctions');
+
 
 
 function fetchCategories() {
-    return db.query(sqlQueries.gameCategories)
+    return db.query(sqlQueries.gameCategoriesSQL)
     .then(gameCategories => {
         return gameCategories.rows;
     });
@@ -12,24 +12,12 @@ function fetchCategories() {
 
 function fetchReviews() {
 
-    let gameReviews;
-    let commentCount;
-
-    return db.query(sqlQueries.gameReviews)
+    return db.query(sqlQueries.getAllReviewsWithCommentCountSQL)
     .then(({rows}) => {
-        gameReviews = rows;
+        return rows;
     })
-    .then(() => {
+}
 
-     return db.query(sqlQueries.reviewCommentCount)})
-
-    .then(({rows}) => {
-            commentCount = rows;
-            const fixedReviews = buildNewReviewObj(gameReviews, commentCount);
-
-            return fixedReviews;
-        })    
-}  
 
 
 function fetchSingleReview(id) {
@@ -44,33 +32,3 @@ function fetchSingleReview(id) {
 
 module.exports = {fetchCategories, fetchReviews, fetchSingleReview};
 
-
-/*Backup because HUSKY grrrrr 
-
-function fetchReviews() {
-    db.query(sqlQueries.gameReviews)
-    .then(({rows}) => {
-        let gameReviews = rows;
-        
-        db.query(sqlQueries.reviewCommentCount)
-        .then(commentCount => {
-            
-            commentCount.rows.forEach(comments => {
-                for(const review of gameReviews) 
-                {
-                    if (comments.review_id === review.review_id){
-                        
-                        review.comment_count = comments.tot;
-                    }
-                }
-            })
-            console.log('revs', gameReviews);
-            return gameReviews;
-        })  
-        
-    })
-    
-    // return console.log('revOut', gameReviews);
- 
-}  
-*/
