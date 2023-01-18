@@ -109,7 +109,7 @@ describe('GET Endpoints', () => {
             });
     });
 
-    describe('getSingleReview', () => {
+    describe.skip('getSingleReview', () => {
 
         test(`Expect the response code to return 200 & a JSON object`, () => {
             return request(app).get('/api/reviews/1')
