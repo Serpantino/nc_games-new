@@ -1,10 +1,23 @@
 
-const gameCategories = `SELECT * FROM categories;`;
-const gameReviews = `SELECT * FROM reviews ORDER BY created_at DESC;`;
-const reviewComments = `SELECT * FROM comments`
-const reviewCommentCount = `
+const gameCategoriesSQL = `SELECT * FROM categories;`;
+const getAllReviewsWithCommentCountSQL = 
+`SELECT reviews.*,
+CAST (COUNT (comments.review_id) AS INT) AS comment_count
+FROM reviews 
+LEFT JOIN comments ON comments.review_id = reviews.review_id
+GROUP BY reviews.review_id
+ORDER BY created_at DESC;`;
+const reviewCommentsSQL = `SELECT * FROM comments`
+const reviewCommentCountSQL = `
 SELECT reviews.review_id, (SELECT COUNT (review_id) FROM comments WHERE comments.review_id = reviews.review_id) AS TOT FROM reviews;`
+const singleReviewSQL = `SELECT * FROM reviews WHERE review_id = $1;`;
 
-const fetchReviewComments = `SELECT * FROM comments WHERE review_id = $1;`
+const fetchReviewCommentsSQL = `SELECT * FROM comments WHERE review_id = $1;`
 
-module.exports = {gameCategories, gameReviews, reviewComments, reviewCommentCount, fetchReviewComments};
+module.exports = {gameCategoriesSQL,
+     getAllReviewsWithCommentCountSQL, 
+     reviewCommentsSQL, 
+     reviewCommentCountSQL,
+     singleReviewSQL,
+     fetchReviewCommentsSQL
+    };
