@@ -73,10 +73,7 @@ describe("GET Endpoints", () => {
               expect(review).toHaveProperty("category", expect.any(String));
               expect(review).toHaveProperty("created_at", expect.any(String));
               expect(review).toHaveProperty("votes", expect.any(Number));
-              expect(review).toHaveProperty(
-                "comment_count",
-                expect.any(Number)
-              );
+              expect(review).toHaveProperty("comment_count",expect.any(Number));
             });
           });
       });
@@ -193,6 +190,7 @@ describe("GET Endpoints", () => {
           .get("/api/reviews/2/comments")
           .expect(200)
           .then((comments) => {
+            expect(comments.body.comments.length).toBe(3)
             comments.body.comments.forEach((comment) => {
               expect(comment).toHaveProperty("body");
               expect(comment).toHaveProperty("votes");
@@ -202,6 +200,14 @@ describe("GET Endpoints", () => {
             });
           });
       });
+      test("Expect comments to be sorted by date (most recent first)", () => {
+        return request(app).get("/api/reviews/3/comments")
+        .expect(200)
+        .then(({body}) => {
+            expect(body.comments).toBeSortedBy("created_at", { descending: true });
+        });
+      });
+    
     });
   });
 });
