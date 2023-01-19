@@ -54,9 +54,17 @@ function fetchReviewComments(id) {
 }
 
 
-function updateReviewVotes(id, value) {
-  
-    const voteUpdateValue = Math.round(value);
+function updateReviewVotes(id, body) {
+
+    if(!body.inc_votes) {
+      return Promise.reject({status: 400, message: "Bad Request, Invalid Key"});
+    }
+    const voteUpdateValue = Math.round(body.inc_votes);
+    
+    if(isNaN(voteUpdateValue)) {
+      return Promise.reject({status: 400, message: 'Bad request, invalid data type'})
+    }
+    
     return db.query(sqlQueries.patchReviewVotesSQL,[id, voteUpdateValue])
     .then(() => {
       

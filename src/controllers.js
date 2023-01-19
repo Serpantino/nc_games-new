@@ -44,17 +44,15 @@ const getReviewComments = (request, response, next) => {
 
 const patchReviewVoteCount = (request, response, next) => {
   
-  
   return fetchSingleReview(request.params.review_id).then(() => {
-    console.log("prHi");
     return updateReviewVotes(
       request.params.review_id,
-      request.body.inc_votes
+      request.body
     ).then((updatedReview) => {
 
       response.status(201).send({ updatedReview });
     });
-  });
+  }).catch((error) => next(error));
 };
 
 module.exports = {
