@@ -48,15 +48,22 @@ function fetchReviewComments(id) {
       return db.query(sqlQueries.fetchReviewCommentsSQL, [id]);
     })
     .then((reviewComments) => {
+
       return reviewComments.rows;
     });
 }
 
 
 function updateReviewVotes(id, value) {
+  
     const voteUpdateValue = Math.round(value);
-    return db.query(sqlQueries.patchReviewVotesSQL,[id, voteUpdateValue]); //The sql itself deff works, checked it manually.
-}
+    return db.query(sqlQueries.patchReviewVotesSQL,[id, voteUpdateValue])
+    .then(() => {
+      
+        return fetchSingleReview(id);
+    });
+  };
+
 
 module.exports = {
   fetchCategories,
