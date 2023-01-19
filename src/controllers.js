@@ -4,6 +4,7 @@ const {
   fetchReviewComments,
   fetchReviews,
   fetchSingleReview,
+  updateReviewVotes
 } = require("./models");
 
 const getCategories = (request, response, next) => {
@@ -41,9 +42,21 @@ const getReviewComments = (request, response, next) => {
   }).catch(error => next(error));
 };
 
+const patchReviewVoteCount=(request, response , next) => {
+
+  console.log9(request.body);
+  return fetchSingleReview(request.params)
+  .then(
+    () => {
+      return updateReviewVotes(request.params, request.body.inc_votes);
+    }
+  )
+}
+
 module.exports = {
   getCategories,
   getReviews,
   getReviewComments,
   getSingleReview,
+  patchReviewVoteCount
 };

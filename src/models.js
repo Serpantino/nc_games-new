@@ -1,6 +1,7 @@
 const db = require("../db/connection");
 const sqlQueries = require("../src/sqlQueries");
 
+
 function fetchCategories() {
   return db.query(sqlQueries.gameCategoriesSQL).then((gameCategories) => {
     return gameCategories.rows;
@@ -51,9 +52,16 @@ function fetchReviewComments(id) {
     });
 }
 
+
+function updateReviewVotes(id, value) {
+    const voteUpdateValue = Math.round(value);
+    return db.query(sqlQueries.patchReviewVotesSQL,[id, voteUpdateValue]); //The sql itself deff works, checked it manually.
+}
+
 module.exports = {
   fetchCategories,
   fetchReviews,
   fetchReviewComments,
   fetchSingleReview,
+  updateReviewVotes
 };
