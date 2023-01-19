@@ -1,46 +1,49 @@
-const { fetchCategories, fetchReviews, fetchSingleReview } = require ('./models');
-
+const { ConsoleWriter } = require("istanbul-lib-report");
+const {
+  fetchCategories,
+  fetchReviewComments,
+  fetchReviews,
+  fetchSingleReview,
+} = require("./models");
 
 const getCategories = (request, response, next) => {
-   
-    fetchCategories()
+  fetchCategories()
     .then((gameCategories) => {
-
-         response.status(200).send({categories: gameCategories});
-
+      response.status(200).send({ categories: gameCategories });
     })
-    .catch(error => next(error));
-}
+    .catch((error) => next(error));
+};
 
 const getReviews = (request, response, next) => {
-
-    fetchReviews()
-    .then((gameReviews)=> {
-        
-        response.status(200).send(gameReviews);
+  fetchReviews()
+    .then((gameReviews) => {
+      response.status(200).send(gameReviews);
     })
-    .catch(error => next(error));
-}
+    .catch((error) => next(error));
+};
 
 const getSingleReview = (request, response, next) => {
-
-    fetchSingleReview(request.params)
+  
+  return fetchSingleReview(request.params.review_id)
     .then((singleReview) => {
-        if(singleReview.length === 0) {
-            throw(error)
-        }
-
-        response.status(200).send(singleReview);
+      response.status(200).send({ review: singleReview });
     })
-    .catch(error => next(error));
-}
 
-module.exports = {getCategories, getReviews, getSingleReview};
+    .catch((error) => next(error));
+};
 
+const getReviewComments = (request, response, next) => {
+  const reviewId = request.params.review_id;
+  
+  return fetchReviewComments(reviewId).then((reviewComments) => {
 
-//!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_! //
-//!_!_!_!_!_!_!_!_MERGE NOTES_!_!_!_!_!_!_! //
-//!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_! //
-/*
-    Removed get500Error as it gets overridden by 400.
-*/
+    response.status(200).send({comments: reviewComments})
+  }).catch(error => next(error));
+};
+
+module.exports = {
+  getCategories,
+  getReviews,
+  getReviewComments,
+  getSingleReview,
+};
