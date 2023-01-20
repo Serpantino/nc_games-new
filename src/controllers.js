@@ -83,6 +83,17 @@ const getAllUsers = (request, response, next) => {
   ).catch(error => next(error))
 }
 
+const getReviewQuery = (request, response, next) => {
+  console.log('controller');
+  console.log('query',request.query);
+  // return fetchReviewQuery(request).then(
+  //   (queryResults) => {
+
+  //     response.status(200).send({results: queryResults});
+  //   }
+  // ).catch(error => next(error));
+}
+
 module.exports = {
   getCategories,
   getReviews,
@@ -90,5 +101,6 @@ module.exports = {
   getSingleReview,
   patchReviewVoteCount,
   postReviewComment,
-  getAllUsers
+  getAllUsers,
+  getReviewQuery
 };

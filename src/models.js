@@ -113,6 +113,13 @@ function fetchAllUsers() {
   });
 }
 
+function fetchReviewQuery(query) {
+  console.log('model gRq');
+  console.log(query.query);
+  
+  return db.query()
+}
+
 module.exports = {
   fetchCategories,
   fetchReviews,
@@ -121,5 +128,6 @@ module.exports = {
   updateReviewVotes,
   fetchUser,
   insertReviewComment,
-  fetchAllUsers
+  fetchAllUsers,
+  fetchReviewQuery
 };
