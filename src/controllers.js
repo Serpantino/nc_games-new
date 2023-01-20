@@ -46,14 +46,15 @@ const getReviewComments = (request, response, next) => {
 const postReviewComment = (request, response, next) => {
     return fetchReviewComments(request.params.review_id)
     .then(() => {
-        return fetchUser(request.body.username)
+      
+        return fetchUser(request.body)
     })
     .then(() => {
         return insertReviewComment(request.body, request.params.review_id)
     })
-    .then((updatedComments) => {
+    .then((updatedComment) => {
         
-        response.status(201).send({comments: updatedComments});
+        response.status(201).send({comment: updatedComment});
     }).catch(error => {next(error)});
 }
 

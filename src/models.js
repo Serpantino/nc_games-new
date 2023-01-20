@@ -53,7 +53,12 @@ function fetchReviewComments(id) {
 
 function fetchUser(username) {
   
-  return db.query(sqlQueries.fetchUserByUsernameSQL, [username])
+  if(!username.username) {
+  
+    return Promise.reject({status: 400, message: "Invalid Key"});
+  }
+
+  return db.query(sqlQueries.fetchUserByUsernameSQL, [username.username])
   .then((user) => {
 
     if ((user.rows.length === 0)) {
@@ -67,25 +72,17 @@ function fetchUser(username) {
 
 function insertReviewComment(commentData, id) {
   
-if (!commentData.body || typeof commentData.body !== 'string') {
-  
+if ( typeof commentData.username !== 'string' || typeof commentData.body !== 'string'
+) {
+    
   return Promise.reject({status: 400, message: "Invalid data entry"});
 } 
 
-if (commentData.body.length < 6) {
-  
-  return Promise.reject({status: 400, message: "Comment too short"});
-}
-
   return db.query(sqlQueries.insertReviewCommentSQL, [id, commentData.username, commentData.body])
-    .then(() => {
-      return fetchReviewComments(id)
-      .then( (comments) => {
-
-        return comments;
-      })
+    .then((comment) => {
+      console.log('comment', comment.rows)
+      return comment.rows;
     });
-    
 }
 
 module.exports = {
