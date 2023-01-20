@@ -4,6 +4,7 @@ const {
   fetchReviewComments,
   fetchReviews,
   fetchSingleReview,
+  updateReviewVotes,
   fetchUser,
   insertReviewComment
 } = require("./models");
@@ -25,7 +26,6 @@ const getReviews = (request, response, next) => {
 };
 
 const getSingleReview = (request, response, next) => {
-  
   return fetchSingleReview(request.params.review_id)
     .then((singleReview) => {
       response.status(200).send({ review: singleReview });
@@ -36,11 +36,25 @@ const getSingleReview = (request, response, next) => {
 
 const getReviewComments = (request, response, next) => {
   const reviewId = request.params.review_id;
-  
-  return fetchReviewComments(reviewId).then((reviewComments) => {
 
-    response.status(200).send({comments: reviewComments})
-  }).catch(error => next(error));
+  return fetchReviewComments(reviewId)
+    .then((reviewComments) => {
+      response.status(200).send({ comments: reviewComments });
+    })
+    .catch((error) => next(error));
+};
+
+const patchReviewVoteCount = (request, response, next) => {
+  
+  return fetchSingleReview(request.params.review_id).then(() => {
+    return updateReviewVotes(
+      request.params.review_id,
+      request.body
+    ).then((updatedReview) => {
+
+      response.status(201).send({ updatedReview });
+    });
+  }).catch((error) => next(error));
 };
 
 const postReviewComment = (request, response, next) => {
@@ -63,5 +77,6 @@ module.exports = {
   getReviews,
   getReviewComments,
   getSingleReview,
+  patchReviewVoteCount,
   postReviewComment
 };
