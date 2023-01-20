@@ -26,7 +26,7 @@ describe('Get All Users', () => {
             return request(app).get('/api/users')
             .expect(200)
             .then(({body}) => {
-                console.log(body);
+            
                 expect(body.users.length).toBe(4);
             });
         });
@@ -34,7 +34,7 @@ describe('Get All Users', () => {
             return request(app).get('/api/users')
             .expect(200)
             .then(({body}) => {
-                console.log(body);
+        
                 body.users.forEach(user => {
                     expect(user).toHaveProperty("username", expect.any(String));
                     expect(user).toHaveProperty("name", expect.any(String));

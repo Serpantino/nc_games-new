@@ -77,7 +77,7 @@ const getAllUsers = (request, response, next) => {
   
   return fetchAllUsers().then(
     (allUsers) => {
-      console.log('up')
+      
       response.status(200).send({users: allUsers})
     }
   ).catch(error => next(error))

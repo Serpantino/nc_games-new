@@ -102,7 +102,7 @@ function insertReviewComment(commentData, id) {
       commentData.body,
     ])
     .then((comment) => {
-      console.log("comment", comment.rows);
+      
       return comment.rows;
     });
 }
