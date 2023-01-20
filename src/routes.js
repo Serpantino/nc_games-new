@@ -1,5 +1,6 @@
 const {Router} = require('express');
-const {getCategories, getReviews, getSingleReview, getReviewComments, patchReviewVoteCount} = require('./controllers');
+
+const {getCategories, getReviews, getSingleReview, getReviewComments, postReviewComment, patchReviewVoteCount} = require('./controllers');
 const router = new Router();
 
 router.get('/', (request, response) => {
@@ -16,7 +17,8 @@ router.get('/reviews', getReviews);
 router.route('/reviews/:review_id').get(getSingleReview)
 .patch(patchReviewVoteCount);
 
-router.route('/reviews/:review_id/comments').get(getReviewComments);
+router.route('/reviews/:review_id/comments').get(getReviewComments)
+.post(postReviewComment);
 
 module.exports = router;
 
