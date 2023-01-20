@@ -51,9 +51,45 @@ function fetchReviewComments(id) {
     });
 }
 
+function fetchUser(username) {
+  
+  if(!username.username) {
+  
+    return Promise.reject({status: 400, message: "Invalid Key"});
+  }
+
+  return db.query(sqlQueries.fetchUserByUsernameSQL, [username.username])
+  .then((user) => {
+
+    if ((user.rows.length === 0)) {
+      
+      return Promise.reject({ status: 400, message: "User not found" });
+    }
+  
+    return user.rows;
+  })
+}
+
+function insertReviewComment(commentData, id) {
+  
+if ( typeof commentData.username !== 'string' || typeof commentData.body !== 'string'
+) {
+    
+  return Promise.reject({status: 400, message: "Invalid data entry"});
+} 
+
+  return db.query(sqlQueries.insertReviewCommentSQL, [id, commentData.username, commentData.body])
+    .then((comment) => {
+      console.log('comment', comment.rows)
+      return comment.rows;
+    });
+}
+
 module.exports = {
   fetchCategories,
   fetchReviews,
   fetchReviewComments,
   fetchSingleReview,
+  fetchUser,
+  insertReviewComment,
 };

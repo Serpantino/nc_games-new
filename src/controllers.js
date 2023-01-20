@@ -4,6 +4,8 @@ const {
   fetchReviewComments,
   fetchReviews,
   fetchSingleReview,
+  fetchUser,
+  insertReviewComment
 } = require("./models");
 
 const getCategories = (request, response, next) => {
@@ -41,9 +43,25 @@ const getReviewComments = (request, response, next) => {
   }).catch(error => next(error));
 };
 
+const postReviewComment = (request, response, next) => {
+    return fetchReviewComments(request.params.review_id)
+    .then(() => {
+      
+        return fetchUser(request.body)
+    })
+    .then(() => {
+        return insertReviewComment(request.body, request.params.review_id)
+    })
+    .then((updatedComment) => {
+        
+        response.status(201).send({comment: updatedComment});
+    }).catch(error => {next(error)});
+}
+
 module.exports = {
   getCategories,
   getReviews,
   getReviewComments,
   getSingleReview,
+  postReviewComment
 };
