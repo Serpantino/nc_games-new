@@ -8,8 +8,8 @@
     "seed": "node ./db/seeds/run-seed.js",
     "test": "jest --detectOpenHandles --forceExit",
     "start": "node listen.js",
-    "seed-prod": "NODE_ENV=production npm run seed",
-    "prepare": "husky install"
+    "seed-prod": "NODE_ENV=production npm run seed"
+
   },
   "repository": {
     "type": "git",

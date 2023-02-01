@@ -1,4 +1,3 @@
-const { ConsoleWriter } = require("istanbul-lib-report");
 const {
   fetchCategories,
   fetchReviewComments,
