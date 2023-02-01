@@ -11,7 +11,7 @@ router.get('/', (request, response) => {
 
 router.get('/categories', getCategories);
 
-router.get('/reviews?query=*', getReviewQuery);
+router.get('/reviews?', getReviews);
 
 router.get('/reviews', getReviews);
 

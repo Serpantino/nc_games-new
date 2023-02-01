@@ -114,10 +114,26 @@ function fetchAllUsers() {
 }
 
 function fetchReviewQuery(query) {
-  console.log('model gRq');
-  console.log(query.query);
+  const SQLqueryValues = [];  
+  const SQLquery = ['SELECT * FROM reviews'];
+
+  if (query.categories) {
   
-  return db.query()
+      SQLqueryValues.push(`'${query.categories}'`)
+    }
+    // SQLqueryValues.push(query.categories);
+    console.log('Values added', SQLqueryValues);
+    SQLquery.push ` WHERE reviews.category = $1`;
+  
+  SQLquery.push(`;`);
+  console.log(SQLquery.flat().join(''));
+
+  return db.query(SQLquery, [SQLqueryValues.toString()]).then(
+    (result) => {
+      console.log('result', result)
+      return result.rows;
+    }
+  )
 }
 
 module.exports = {

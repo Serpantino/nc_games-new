@@ -7,7 +7,8 @@ const {
   updateReviewVotes,
   fetchUser,
   insertReviewComment,
-  fetchAllUsers
+  fetchAllUsers,
+  fetchReviewQuery
 } = require("./models");
 
 const getCategories = (request, response, next) => {
@@ -19,6 +20,13 @@ const getCategories = (request, response, next) => {
 };
 
 const getReviews = (request, response, next) => {
+  if(request.query) {
+    return fetchReviewQuery(request.query).then(
+      (queryResults) => {
+        response.status(200).send({results: queryResults});
+      });
+  }
+
   fetchReviews()
     .then((gameReviews) => {
       response.status(200).send(gameReviews);
@@ -83,17 +91,6 @@ const getAllUsers = (request, response, next) => {
   ).catch(error => next(error))
 }
 
-const getReviewQuery = (request, response, next) => {
-  console.log('controller');
-  console.log('query',request.query);
-  // return fetchReviewQuery(request).then(
-  //   (queryResults) => {
-
-  //     response.status(200).send({results: queryResults});
-  //   }
-  // ).catch(error => next(error));
-}
-
 module.exports = {
   getCategories,
   getReviews,
@@ -102,5 +99,4 @@ module.exports = {
   patchReviewVoteCount,
   postReviewComment,
   getAllUsers,
-  getReviewQuery
 };
