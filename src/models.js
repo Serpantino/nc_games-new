@@ -115,22 +115,20 @@ function fetchAllUsers() {
 
 function fetchReviewQuery(query) {
   const SQLqueryValues = [];  
-  const SQLquery = ['SELECT * FROM reviews'];
+  let SQLquery = `SELECT * FROM reviews`;
 
   if (query.categories) {
-  
-      SQLqueryValues.push(`'${query.categories}'`)
+      SQLqueryValues.push(query.categories)
+      console.log('Values added', SQLqueryValues);
+      SQLquery += ` WHERE reviews.category = $1`;
     }
-    // SQLqueryValues.push(query.categories);
-    console.log('Values added', SQLqueryValues);
-    SQLquery.push ` WHERE reviews.category = $1`;
+    
   
-  SQLquery.push(`;`);
-  console.log(SQLquery.flat().join(''));
-
-  return db.query(SQLquery, [SQLqueryValues.toString()]).then(
+  // SQLquery+= `;`;
+    console.log('Query ==>', SQLquery, ':: Values ==>', SQLqueryValues, '<===TypeOf', typeof SQLqueryValues[0])
+  return db.query(SQLquery, [SQLqueryValues]).then(
     (result) => {
-      console.log('result', result)
+      console.log('result', result.rows);
       return result.rows;
     }
   )

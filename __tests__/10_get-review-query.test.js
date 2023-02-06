@@ -18,7 +18,7 @@ describe('getReviewQuery', () => {
 
     });
 
-    describe.skip('Functionality Testing', () => {
+    describe('Functionality Testing', () => {
 
         test.only('Expect the dexterity category to be returned when the requested query is categories=dexterity' , () => {
 
