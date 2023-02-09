@@ -74,12 +74,12 @@ function updateReviewVotes(id, body) {
 
 function fetchUser(username) {
   
-  if(!username.username) {
+  if(!username) {
   
     return Promise.reject({status: 400, message: "Invalid Key"});
   }
 
-  return db.query(sqlQueries.fetchUserByUsernameSQL, [username.username])
+  return db.query(sqlQueries.fetchUserByUsernameSQL, [username])
   .then((user) => {
 
     if ((user.rows.length === 0)) {
@@ -93,7 +93,6 @@ function fetchUser(username) {
 
 
 function insertReviewComment(commentData, id) {
-  
 if ( typeof commentData.username !== 'string' || typeof commentData.body !== 'string'
 ) {
     
