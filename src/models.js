@@ -78,6 +78,7 @@ function fetchUser(username) {
   
     return Promise.reject({status: 400, message: "Invalid Key"});
   }
+  console.log(username);
 
   return db.query(sqlQueries.fetchUserByUsernameSQL, [username])
   .then((user) => {
