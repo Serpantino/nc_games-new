@@ -93,7 +93,7 @@ function fetchUser(username) {
 }
 
 
-function insertReviewComment({commentData}, id) {
+function insertReviewComment(commentData, id) {
 if ( typeof commentData.username !== 'string' || typeof commentData.body !== 'string'
 ) {
     

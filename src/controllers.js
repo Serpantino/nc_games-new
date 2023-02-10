@@ -60,7 +60,7 @@ const postReviewComment = (request, response, next) => {
     return fetchReviewComments(request.params.review_id)
     .then(() => {
       
-        return fetchUser(request.body)
+        return fetchUser(request.body.username)
     })
     .then(() => {
         return insertReviewComment(request.body, request.params.review_id)
