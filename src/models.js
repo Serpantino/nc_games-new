@@ -85,7 +85,7 @@ function fetchUser(username) {
 
     if ((user.rows.length === 0)) {
       
-      return Promise.reject({ status: 400, message: "User not found" });
+      return Promise.reject({ status: 400, message: `User not found ${username}` });
     }
   
     return user.rows;
