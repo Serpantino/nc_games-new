@@ -126,7 +126,7 @@ function fetchReviewQuery(query) {
   
   // SQLquery+= `;`;
     console.log('Query ==>', SQLquery, ':: Values ==>', SQLqueryValues, '<===TypeOf', typeof SQLqueryValues[0])
-  return db.query(SQLquery, [SQLqueryValues]).then(
+  return db.query(SQLquery, [...SQLqueryValues]).then(
     (result) => {
       console.log('result', result.rows);
       return result.rows;
